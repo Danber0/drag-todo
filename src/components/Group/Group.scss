@@ -1,0 +1,35 @@
+.group {
+  margin: 10px;
+  display: flex;
+  &__item {
+    max-width: 300px;
+    min-width: 200px;
+    max-height: 100%;
+    min-height: 300px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+  }
+
+  &__title {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 25px;
+    cursor: grab;
+
+    &:hover {
+      border-radius: 10px;
+      background-color: rgba(133, 246, 134, 0.59);
+    }
+  }
+
+  &__content {
+    .item {
+      cursor: grab;
+      background-color: #fff;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+    }
+  }
+}
