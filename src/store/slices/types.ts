@@ -8,6 +8,7 @@ export interface Task {
 export interface TaskState {
   groupId: string;
   groupName: string;
+  groupCreatedAt: Date;
   tasks: Task[];
 }
 

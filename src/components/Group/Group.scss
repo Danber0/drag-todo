@@ -1,35 +1,66 @@
 .group {
   margin: 10px;
   display: flex;
+
   &__item {
     width: 250px;
     height: 100%;
     min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #434343;
     border-radius: 10px;
-  }
 
-  &__title {
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 25px;
-    cursor: grab;
+    .group__main {
+      position: relative;
+      .group__title {
+        color: #fff;
+        padding: 10px;
+        font-size: 25px;
 
-    &:hover {
-      border-radius: 10px;
-      background-color: rgba(133, 246, 134, 0.59);
+        &:hover {
+          border-radius: 10px 10px 0 0;
+          background-color: #313131;
+        }
+      }
+
+      .group__remove {
+        cursor: pointer;
+        user-select: none;
+        svg {
+          position: absolute;
+          top: 7px;
+          right: 7px;
+        }
+      }
+
+      .group__content {
+        margin: 0 10px 0 10px;
+        .item {
+          cursor: grab;
+          background-color: #ededed;
+          padding: 10px;
+          margin-bottom: 10px;
+          font-weight: bold;
+          font-size: 15px;
+          border-radius: 20px;
+        }
+      }
     }
-  }
 
-  &__content {
-    margin: 10px;
-    .item {
-      cursor: grab;
-      background-color: #fff;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 10px;
+    .group__info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 30px 10px 10px 10px;
+
+      .time {
+        font-weight: bold;
+        color: #ededed;
+        font-size: 12px;
+      }
     }
   }
 }

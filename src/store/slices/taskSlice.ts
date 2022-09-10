@@ -7,6 +7,7 @@ const initialState: InitialState = {
     {
       groupId: nanoid(),
       groupName: "Jake",
+      groupCreatedAt: new Date(),
       tasks: [
         {
           id: 1,
@@ -25,6 +26,7 @@ const initialState: InitialState = {
     {
       groupId: nanoid(),
       groupName: "Elian",
+      groupCreatedAt: new Date(),
       tasks: [
         {
           id: 3,
@@ -49,6 +51,7 @@ const initialState: InitialState = {
     {
       groupId: nanoid(),
       groupName: "Mike",
+      groupCreatedAt: new Date(),
       tasks: [
         {
           id: 6,

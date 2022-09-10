@@ -61,8 +61,6 @@ function App() {
   // const [activeItem, setActiveItem] = React.useState(false);
   const { taskData } = useAppSelector((state) => state.taskSlice);
 
-  console.log(taskData);
-
   return (
     <div className="App">
       <DragDropContext
