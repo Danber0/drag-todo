@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "./hooks";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Dispatch } from "@reduxjs/toolkit";
 import { updateGroup, updateTask } from "./store/slices/taskSlice";
-import { InitialState, TaskState } from "./store/slices/types";
+import { InitialState, Task, TaskState } from "./store/slices/types";
 import Group from "./components/Group";
 
-const onDragEnd = (result: any, taskData: any, dispatch: Dispatch) => {
+const onDragEnd = (result: any, taskData: TaskState[], dispatch: Dispatch) => {
   if (!result.destination) return;
 
   if (result.type === "group") {
@@ -17,24 +17,40 @@ const onDragEnd = (result: any, taskData: any, dispatch: Dispatch) => {
 
     dispatch(updateGroup(group));
   } else {
-    const group: any = taskData[result.source.droppableId];
-    const groupDest: any = taskData[result.destination.droppableId];
+    const group: TaskState = taskData[result.source.droppableId];
+    const groupDest: TaskState = taskData[result.destination.droppableId];
+    let res;
 
-    const withTaskRemoved = [...group.tasks];
-    const withTask = [...group.tasks][result.source.index];
+    const restTaskInGroup = [...group.tasks];
+    const newTaskGroup = [...groupDest.tasks];
+    const selectedTask = [...group.tasks][result.source.index];
 
-    withTaskRemoved.splice(result.source.index, 1);
+    restTaskInGroup.splice(result.source.index, 1);
+    newTaskGroup.splice(result.destination.index, 0, selectedTask);
 
-    const res = {
-      ...taskData,
-      [result.source.droppableId]: { ...group, tasks: withTaskRemoved },
-      [result.destination.droppableId]: {
-        ...groupDest,
-        tasks: [...groupDest.tasks, withTask],
-      },
-    };
+    if (result.source.droppableId !== result.destination.droppableId) {
+      res = {
+        ...taskData,
+        [result.source.droppableId]: { ...group, tasks: restTaskInGroup },
+        [result.destination.droppableId]: {
+          ...groupDest,
+          tasks: newTaskGroup,
+        },
+      };
+    } else {
+      const group: Task[] = taskData[result.destination.droppableId].tasks;
+      const groupCopy = [...group];
+      const [reorderedItem] = groupCopy.splice(result.source.index, 1);
+      groupCopy.splice(result.destination.index, 0, reorderedItem);
 
-    console.log(Object.values(res));
+      res = {
+        ...taskData,
+        [result.destination.droppableId]: {
+          ...groupDest,
+          tasks: groupCopy,
+        },
+      };
+    }
 
     dispatch(updateTask(res));
   }
