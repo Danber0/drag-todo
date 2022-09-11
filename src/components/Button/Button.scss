@@ -11,9 +11,9 @@
   }
 
   svg {
-    position: relative;
-    top: 2px;
-    margin: 0 6px 0 6px;
+    position: relative !important;
+    top: 2px !important;
+    margin: 0 6px 0 6px !important;
   }
   &:hover {
     transform: scale(1.1);

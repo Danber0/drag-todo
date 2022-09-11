@@ -7,6 +7,10 @@ const rootReducer = combineReducers({
 
 export const setupStore = () => {
   return configureStore({
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
     devTools: true,
     reducer: rootReducer,
   });

@@ -1,11 +1,13 @@
-import React, { SetStateAction } from "react";
-import "./App.scss";
-import { useAppDispatch, useAppSelector } from "./hooks";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import React from "react";
 import { Dispatch } from "@reduxjs/toolkit";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+
+import { useAppDispatch, useAppSelector } from "./hooks";
 import { updateGroup, updateTask } from "./store/slices/taskSlice";
-import { InitialState, Task, TaskState } from "./store/slices/types";
+import { ITask, TaskState } from "./store/slices/types";
 import Group from "./components/Group";
+
+import "./App.scss";
 
 const onDragEnd = (result: any, taskData: TaskState[], dispatch: Dispatch) => {
   if (!result.destination) return;
@@ -38,7 +40,7 @@ const onDragEnd = (result: any, taskData: TaskState[], dispatch: Dispatch) => {
         },
       };
     } else {
-      const group: Task[] = taskData[result.destination.droppableId].tasks;
+      const group: ITask[] = taskData[result.destination.droppableId].tasks;
       const groupCopy = [...group];
       const [reorderedItem] = groupCopy.splice(result.source.index, 1);
       groupCopy.splice(result.destination.index, 0, reorderedItem);
@@ -58,7 +60,6 @@ const onDragEnd = (result: any, taskData: TaskState[], dispatch: Dispatch) => {
 
 function App() {
   const dispatch = useAppDispatch();
-  // const [activeItem, setActiveItem] = React.useState(false);
   const { taskData } = useAppSelector((state) => state.taskSlice);
 
   return (

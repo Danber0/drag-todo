@@ -1,4 +1,4 @@
-export interface Task {
+export interface ITask {
   id: number;
   dragId: string;
   text: string;
@@ -9,7 +9,8 @@ export interface TaskState {
   groupId: string;
   groupName: string;
   groupCreatedAt: Date;
-  tasks: Task[];
+  isAdded: boolean;
+  tasks: ITask[];
 }
 
 export interface InitialState {

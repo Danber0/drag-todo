@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 import { InitialState, TaskState } from "./types";
 
@@ -8,15 +8,16 @@ const initialState: InitialState = {
       groupId: nanoid(),
       groupName: "Jake",
       groupCreatedAt: new Date(),
+      isAdded: false,
       tasks: [
         {
-          id: 1,
+          id: Math.random(),
           dragId: nanoid(),
           text: "First Task",
           editable: false,
         },
         {
-          id: 2,
+          id: Math.random(),
           dragId: nanoid(),
           text: "First Task 1",
           editable: false,
@@ -27,21 +28,22 @@ const initialState: InitialState = {
       groupId: nanoid(),
       groupName: "Elian",
       groupCreatedAt: new Date(),
+      isAdded: false,
       tasks: [
         {
-          id: 3,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Second Task",
           editable: false,
         },
         {
-          id: 4,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Second Task 1",
           editable: false,
         },
         {
-          id: 5,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Second Task 2",
           editable: false,
@@ -52,33 +54,34 @@ const initialState: InitialState = {
       groupId: nanoid(),
       groupName: "Mike",
       groupCreatedAt: new Date(),
+      isAdded: false,
       tasks: [
         {
-          id: 6,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Third Task",
           editable: false,
         },
         {
-          id: 7,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Third Task 1",
           editable: false,
         },
         {
-          id: 9,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Third Task 1 ",
           editable: false,
         },
         {
-          id: 9,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Third Task 1",
           editable: false,
         },
         {
-          id: 10,
+          id: Math.random(),
           dragId: nanoid(),
           text: "Third Task 1",
           editable: false,
@@ -89,22 +92,58 @@ const initialState: InitialState = {
 };
 
 export const taskSlice = createSlice({
-  name: "task",
+  name: "groups",
   initialState,
   reducers: {
-    addNewTask(state) {},
-    updateGroup(state, { payload }: PayloadAction<TaskState[]>) {
-      state.taskData = payload;
+    addNewTask(
+      state,
+      action: PayloadAction<{ inputValue: string; id: number }>
+    ) {
+      state.taskData[action.payload.id].tasks.push({
+        id: Math.random(),
+        dragId: nanoid(),
+        text: action.payload.inputValue,
+        editable: false,
+      });
     },
-    updateTask(state, { payload }: PayloadAction<TaskState[]>) {
-      state.taskData = Object.values(payload);
+    removeTask(
+      state,
+      action: PayloadAction<{ taskId: number; groupId: number }>
+    ) {
+      state.taskData[action.payload.groupId].tasks = state.taskData[
+        action.payload.groupId
+      ].tasks.filter((task) => task.id !== action.payload.taskId);
     },
-    removeItem(state) {},
+    updateTask(state, action: PayloadAction<TaskState[]>) {
+      state.taskData = Object.values(action.payload);
+    },
+    updateGroup(state, action: PayloadAction<TaskState[]>) {
+      state.taskData = action.payload;
+    },
+    removeGroup(state, action: PayloadAction<string>) {
+      state.taskData = state.taskData.filter(
+        (group) => group.groupId !== action.payload
+      );
+    },
+    isAddedTrue(state, action: PayloadAction<number>) {
+      state.taskData[action.payload].isAdded = true;
+    },
+    isAddedFalse(state, action: PayloadAction<number>) {
+      state.taskData[action.payload].isAdded = false;
+    },
     editTask(state) {},
   },
 });
 
-export const { addNewTask, removeItem, editTask, updateGroup, updateTask } =
-  taskSlice.actions;
+export const {
+  addNewTask,
+  removeTask,
+  editTask,
+  updateGroup,
+  updateTask,
+  isAddedTrue,
+  isAddedFalse,
+  removeGroup,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;

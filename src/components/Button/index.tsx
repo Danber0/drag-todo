@@ -7,12 +7,23 @@ interface ButtonProps {
   color: string;
   backgroundColor: string;
   type: "add" | "remove";
+  onClick?: (event: any) => void;
 }
 
-const Button: FC<ButtonProps> = ({ text, color, type, backgroundColor }) => {
+const Button: FC<ButtonProps> = ({
+  text,
+  color,
+  type,
+  backgroundColor,
+  onClick,
+}) => {
   return (
     <React.Fragment>
-      <button className="add-button" style={{ backgroundColor }}>
+      <button
+        className="add-button"
+        style={{ backgroundColor }}
+        onClick={onClick}
+      >
         <span style={{ color }}>{text}</span>
         <svg
           width="10"
