@@ -107,7 +107,7 @@ const Group: FC<InitialState> = ({ taskData }) => {
                     <React.Fragment>
                       <input
                         type="text"
-                        placeholder="Введите текст задачи"
+                        placeholder="Input task"
                         value={inputValue}
                         onKeyDown={(event) => handleSubmitTask(event, index)}
                         onChange={(event) => setInputValue(event.target.value)}
@@ -133,7 +133,7 @@ const Group: FC<InitialState> = ({ taskData }) => {
                   ) : (
                     <Button
                       onClick={(event) => showInput(event, index)}
-                      text="Новая задача"
+                      text="New Task"
                       color="#444444"
                       type="add"
                       backgroundColor="#d9d9d9"
@@ -154,14 +154,6 @@ const Group: FC<InitialState> = ({ taskData }) => {
           )}
         </Draggable>
       ))}
-      <div className="group__add">
-        <Button
-          text="Добавить доску"
-          color="#EDEDED"
-          type="remove"
-          backgroundColor="#434343"
-        />
-      </div>
     </React.Fragment>
   );
 };
